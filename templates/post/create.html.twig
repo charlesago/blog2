@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formCreate 'bootstrap_5_layout.html.twig' %}
+
+
+{% block body %}
+
+    <h1>Créer ton poste</h1>
+
+    <div class="container">
+    {{ form_start(formCreate) }}
+
+    {{ form_row(formCreate.title) }}
+    {{ form_row(formCreate.content) }}
+
+
+    <button type="submit" class="btn btn-success">Go</button>
+
+    {{ form_end(formCreate) }}
+
+    </div>
+{% endblock %}
