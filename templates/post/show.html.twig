@@ -10,12 +10,15 @@
                 <h1>{{ post.title }}</h1>
 
                 <p> <strong>{{ post.content }}</strong> </p>
-
-                <p>{{ post.createdAt|date('d/m/y H:i') }}</p>
+                <img height="300px" src="{{ vich_uploader_asset(post.image,'imageFile') }}" alt="">
+                <p>{{ post.createdAt|date('d/m/y H:i') }} par {{ post.author.username }}</p>
                 <div class="mt-4">
                     <a href="{{ path('app_post')}}" class="btn btn-secondary">Retour</a>
+
+                    {% if app.user == post.author %}
                 <a class="btn btn-danger me-2" href="{{ path('delete_post',{id:post.id}) }}">Delete</a>
                 <a class="btn btn-warning" href="{{ path('update_post',{id:post.id}) }}">Edit</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -31,12 +34,16 @@
             <div class=" border border-black mt-2 p-2 d-flex justify-content-between align-items-center">
                 <div>
                     <p><strong>{{ comment.content }}</strong></p>
-                    <p>{{ comment.createdAt|date("d/m/Y - H:s") }}</p>
+                    <p>{{ comment.createdAt|date("d/m/Y - H:s") }} par {{ comment.author.username }}</p>
+
                 </div>
                 <div>
+                    {% if app.user == comment.author %}
+                        <a href="{{ path('delete_comment',{id:comment.id},) }}" class="btn btn-danger">Delete</a>
+                        <a href="{{ path('update_comment',{id:comment.id}) }}" class="btn btn-warning">Update</a>
 
-                    <a href="{{ path('delete_comment',{id:comment.id}) }}" class="btn btn-danger">Delete</a>
-                    <a href="{{ path('update_comment',{id:comment.id}) }}" class="btn btn-warning">Update</a>
+                    {% endif %}
+
                 </div>
             </div>
         {% endfor %}

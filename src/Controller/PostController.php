@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/post')]
+#[Route('/connect/post')]
 class PostController extends AbstractController
 {
     #[Route('/', name: 'app_post')]
@@ -56,7 +56,7 @@ class PostController extends AbstractController
 
     #[Route('/create/', name: 'create_post')]
     #[Route('/update/{id}', name: 'update_post')]
-    public function create( Post $post=null,  Request $request, EntityManagerInterface $manager):response
+    public function create( Post $post=null,  Request $request, EntityManagerInterface $manager, ):response
     {
         $edit = false;
 
@@ -72,7 +72,16 @@ class PostController extends AbstractController
         if ($formCreate->isSubmitted() && $formCreate->isValid()){
 
             if (!$edit){
+
+
+
             $post->setCreatedAt(new \DateTime());
+                $post->setAuthor($this->getUser());
+
+            }else{
+                if ($post->getAuthor() !==$this->getUser()){
+                    return $this->redirectToRoute('app_post');
+                }
             }
             $manager->persist($post);
             $manager->flush();

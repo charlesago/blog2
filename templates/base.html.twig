@@ -22,8 +22,9 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarColor03">
-                <ul class="navbar-nav me-auto">
+            <div class="collapse navbar-collapse  " id="navbarColor03">
+                <ul class="navbar-nav me-auto justify-content-space-around d-flex ">
+
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ path('app_post') }}">Home
                             <span class="visually-hidden">(current)</span>
@@ -33,14 +34,35 @@
                         <a class="nav-link" href="{{path('create_post')}}">Create</a>
                     </li>
 
+                    {% if(app.user) %}
+                        <li class="nav-item me-3 ms-3">
+                            <a class="nav-link btn btn-success" href="{{ path('app_logout') }}"><strong>LOGOUT</strong></a>
+                        </li>
+
+                        <a href="{{ path('profil_user') }}" class=" btn btn-secondary text-decoration-none text-dark text-capitalize ">{{ app.user.username }}</a>
+
+                    {% else %}
+                        <li class="nav-item me-3 ms-3">
+                            <a class="nav-link btn btn-success" href="{{ path('app_register') }}"><strong>REGISTER</strong></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-warning" href="{{ path('app_login') }}"><strong>LOGIN</strong></a>
+                        </li>
+                    {%  endif %}
+
+
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
+
+
+
+
             </div>
         </div>
     </nav>
+    <div class="container">
         {% block body %}{% endblock %}
+    </div>
     </body>
 </html>

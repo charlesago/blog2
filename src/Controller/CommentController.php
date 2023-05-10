@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/comment')]
+#[Route('/connect/comment')]
 
 class CommentController extends AbstractController
 {
@@ -34,6 +34,7 @@ class CommentController extends AbstractController
         $formCom->handleRequest($request);
         if ($formCom->isSubmitted() && $formCom->isValid()) {
 
+            $comment->setAuthor($this->getUser());
             $comment->setPost($post);
             $comment->setCreatedAt(new \DateTime());
             $manager->persist($comment);
